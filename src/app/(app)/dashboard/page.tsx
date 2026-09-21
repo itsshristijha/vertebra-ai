@@ -1,34 +1,25 @@
 import type { Metadata } from "next";
-import { getDashboardSummary, getTrends } from "@/lib/demo/data";
-import { DashboardCards } from "@/components/dashboard/DashboardCards";
 import { DashboardGreeting } from "@/components/dashboard/DashboardGreeting";
-import { WeeklySnapshotChart } from "@/components/dashboard/WeeklySnapshotChart";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { RiskDisclaimer } from "@/components/posture/RiskDisclaimer";
+import { StateBanner } from "@/components/ui/state-banner";
+import { Button } from "@/components/ui/button";
+import { DatabaseZap } from "lucide-react";
+import Link from "next/link";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
 export default function DashboardPage() {
-  const summary = getDashboardSummary();
-  const trends = getTrends("7d");
-
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <DashboardGreeting />
 
-      <DashboardCards summary={summary} />
-
-      <div className="grid gap-4 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <WeeklySnapshotChart points={trends.spineHealthScore.points} />
-        </div>
-        <div className="flex flex-col justify-center gap-3 rounded-2xl border border-border bg-card p-6">
-          <h3 className="text-sm font-semibold text-foreground">This week&apos;s insight</h3>
-          <p className="text-sm text-muted-foreground">{trends.insights.mostImproved}</p>
-          <p className="text-sm text-muted-foreground">Needs attention: {trends.insights.needsAttention}</p>
-          <p className="text-sm text-muted-foreground">Best day: {trends.insights.bestDay}</p>
-        </div>
-      </div>
+      <StateBanner
+        icon={DatabaseZap}
+        title="No verified posture data yet"
+        description="Dashboard scores, sitting time, weekly changes and insights will appear after real camera sessions are recorded. Demo values are intentionally hidden."
+        action={<Button asChild><Link href="/live-monitor">Start Live Monitor</Link></Button>}
+      />
 
       <QuickActions />
 
