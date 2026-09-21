@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { Download, Share2, Check, FileClock } from "lucide-react";
+import { Share2, Check, FileClock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +13,7 @@ import { RiskDisclaimer } from "@/components/posture/RiskDisclaimer";
 import { formatDateShort } from "@/lib/utils";
 import { useAppStore } from "@/lib/store/appStore";
 import type { WeeklyReport } from "@/types/health";
+import { ReportExportPanel } from "@/components/reports/ReportExportPanel";
 
 export function WeeklyReportView({ report }: { report: WeeklyReport }) {
   const [copied, setCopied] = useState(false);
@@ -49,31 +50,10 @@ export function WeeklyReportView({ report }: { report: WeeklyReport }) {
           description="This prototype does not turn demo values into a personal report. Complete real camera sessions in Live Monitor and connect a persistent data backend before using weekly trends or averages."
           action={<Button asChild size="sm"><Link href="/live-monitor">Start Live Monitor</Link></Button>}
         />
+        <ReportExportPanel report={report} disabled />
         <RiskDisclaimer />
       </div>
     );
-  }
-
-  function downloadReport() {
-    const lines = [
-      "VERTEBRA-AI — Weekly Spine Health Report (Demo Data)",
-      `Period: ${report.weekStart} to ${report.weekEnd}`,
-      `Overall Trend: ${report.overallTrend}`,
-      `Average Spine Health Score: ${report.averageSpineHealthScore}`,
-      `Total Sitting Time: ${report.totalSittingTimeHours}h`,
-      `Most Frequent Deviation: ${report.mostFrequentDeviation}`,
-      `Weekly Change: ${report.weeklyChangePercent >= 0 ? "+" : ""}${report.weeklyChangePercent}%`,
-      `Recommendation: ${report.recommendation}`,
-      "",
-      "VERTEBRA-AI is a research and wellness prototype. It does not diagnose spinal disorders or replace professional medical assessment.",
-    ];
-    const blob = new Blob([lines.join("\n")], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `vertebra-ai-weekly-report-${report.weekEnd}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
   }
 
   async function shareReport() {
@@ -127,14 +107,13 @@ export function WeeklyReportView({ report }: { report: WeeklyReport }) {
         </CardContent>
       </Card>
 
+      <ReportExportPanel report={report} />
+
       <Card>
         <CardContent className="p-6">
           <p className="text-sm font-semibold text-foreground">Recommendation</p>
           <p className="mt-1 text-sm text-muted-foreground">{report.recommendation}</p>
           <div className="mt-5 flex flex-wrap gap-3">
-            <Button onClick={downloadReport}>
-              <Download className="h-4 w-4" /> Download Report
-            </Button>
             <Button variant="outline" onClick={shareReport}>
               {copied ? <Check className="h-4 w-4" /> : <Share2 className="h-4 w-4" />}
               {copied ? "Copied to clipboard" : "Share Report"}
