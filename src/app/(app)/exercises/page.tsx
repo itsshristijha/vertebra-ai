@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { EXERCISES } from "@/lib/demo/data";
 import { ExerciseCard } from "@/components/exercises/ExerciseCard";
+import { EquipmentShop } from "@/components/exercises/EquipmentShop";
 import { RiskDisclaimer } from "@/components/posture/RiskDisclaimer";
 
 export const metadata: Metadata = { title: "Exercises" };
@@ -18,6 +19,8 @@ export default function ExercisesPage() {
           <ExerciseCard key={ex.id} exercise={ex} />
         ))}
       </div>
+
+      <EquipmentShop />
 
       <RiskDisclaimer />
     </div>

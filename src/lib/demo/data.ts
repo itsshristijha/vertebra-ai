@@ -272,6 +272,7 @@ export const EXERCISES: Exercise[] = [
     sets: 3,
     mediaUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=85",
     mediaAlt: "Person practicing a controlled posture exercise",
+    videoUrl: "https://www.youtube.com/results?search_query=physical+therapist+chin+tuck+exercise",
     instructions: [
       "Sit or stand tall with shoulders relaxed.",
       "Gently draw your chin straight back, as if making a double chin.",
@@ -290,6 +291,7 @@ export const EXERCISES: Exercise[] = [
     sets: 3,
     mediaUrl: "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=85",
     mediaAlt: "Person exercising with shoulders open",
+    videoUrl: "https://www.youtube.com/results?search_query=physical+therapist+shoulder+blade+retraction+exercise",
     instructions: [
       "Sit tall with arms relaxed at your sides.",
       "Squeeze your shoulder blades together and slightly down.",
@@ -308,6 +310,7 @@ export const EXERCISES: Exercise[] = [
     sets: 3,
     mediaUrl: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=85",
     mediaAlt: "Person practicing a mindful mobility pose",
+    videoUrl: "https://www.youtube.com/results?search_query=physical+therapist+thoracic+extension+exercise",
     instructions: [
       "Sit tall, hands gently clasped behind your head.",
       "Gently arch your upper back over the top of a chair or foam roller.",
@@ -326,6 +329,7 @@ export const EXERCISES: Exercise[] = [
     sets: 2,
     mediaUrl: "https://images.unsplash.com/photo-1597452485677-d7d27fba9ee2?auto=format&fit=crop&w=900&q=85",
     mediaAlt: "Person stretching for mobility",
+    videoUrl: "https://www.youtube.com/results?search_query=physical+therapist+doorway+chest+stretch",
     instructions: [
       "Stand in a doorway with forearms on the frame, elbows at shoulder height.",
       "Step forward gently until a mild stretch is felt across the chest.",
@@ -343,6 +347,7 @@ export const EXERCISES: Exercise[] = [
     sets: 1,
     mediaUrl: "https://images.unsplash.com/photo-1552196563-55cd4e45efb3?auto=format&fit=crop&w=900&q=85",
     mediaAlt: "Person practicing a seated stretch",
+    videoUrl: "https://www.youtube.com/results?search_query=physical+therapist+seated+cat+cow+exercise",
     instructions: [
       "Sit toward the edge of your chair, hands on knees.",
       "Inhale, arch your back and lift your chest (cow).",
@@ -361,6 +366,7 @@ export const EXERCISES: Exercise[] = [
     sets: 2,
     mediaUrl: "https://images.unsplash.com/photo-1603988363607-e1a32f17cdbb?auto=format&fit=crop&w=900&q=85",
     mediaAlt: "Person practicing a gentle neck stretch",
+    videoUrl: "https://www.youtube.com/results?search_query=physical+therapist+neck+side+stretch",
     instructions: [
       "Sit tall and gently tilt one ear toward the same shoulder.",
       "Use light hand pressure only if comfortable — never force it.",

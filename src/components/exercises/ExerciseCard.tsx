@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Clock, Image as ImageIcon, Pause, Play, RotateCcw, Target } from "lucide-react";
+import { Clock, ExternalLink, Image as ImageIcon, Pause, Play, RotateCcw, Target } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -55,6 +55,11 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
           <Button size="sm" onClick={() => setOpen(true)} className="mt-auto">
             <Play className="h-4 w-4" /> Start
           </Button>
+          {exercise.videoUrl && (
+            <a href={exercise.videoUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-1.5 text-xs font-medium text-indigo-700 hover:underline">
+              Watch exercise video <ExternalLink className="h-3 w-3" />
+            </a>
+          )}
         </CardContent>
       </Card>
 
@@ -74,6 +79,11 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 to-transparent" />
               <span className="absolute bottom-3 left-3 text-xs font-medium text-white">Visual movement guide</span>
             </div>
+          )}
+          {exercise.videoUrl && (
+            <a href={exercise.videoUrl} target="_blank" rel="noreferrer" className="inline-flex w-fit items-center gap-1.5 rounded-md border border-indigo-200 bg-indigo-50 px-3 py-2 text-xs font-semibold text-indigo-700 hover:bg-indigo-100">
+              <Play className="h-3.5 w-3.5" /> Watch a guided video <ExternalLink className="h-3 w-3" />
+            </a>
           )}
           <ExerciseRunner exercise={exercise} />
           <p className="mt-4 text-xs text-muted-foreground">

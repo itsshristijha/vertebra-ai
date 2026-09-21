@@ -80,4 +80,5 @@ export interface Exercise {
   sets?: number;
   mediaUrl?: string;
   mediaAlt?: string;
+  videoUrl?: string;
 }
