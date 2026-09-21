@@ -327,7 +327,7 @@ export const EXERCISES: Exercise[] = [
     isTimed: true,
     totalSeconds: 20,
     sets: 2,
-    mediaUrl: "https://images.unsplash.com/photo-1597452485677-d7d27fba9ee2?auto=format&fit=crop&w=900&q=85",
+    mediaUrl: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=85",
     mediaAlt: "Person stretching for mobility",
     videoUrl: "https://www.youtube.com/results?search_query=physical+therapist+doorway+chest+stretch",
     instructions: [
@@ -364,7 +364,7 @@ export const EXERCISES: Exercise[] = [
     isTimed: true,
     totalSeconds: 20,
     sets: 2,
-    mediaUrl: "https://images.unsplash.com/photo-1603988363607-e1a32f17cdbb?auto=format&fit=crop&w=900&q=85",
+    mediaUrl: "https://images.unsplash.com/photo-1552196563-55cd4e45efb3?auto=format&fit=crop&w=900&q=85",
     mediaAlt: "Person practicing a gentle neck stretch",
     videoUrl: "https://www.youtube.com/results?search_query=physical+therapist+neck+side+stretch",
     instructions: [

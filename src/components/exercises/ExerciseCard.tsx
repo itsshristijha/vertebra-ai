@@ -31,7 +31,7 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
       <Card className="flex h-full flex-col overflow-hidden">
         <div
           className={`relative flex h-36 items-center justify-center overflow-hidden bg-gradient-to-br text-white ${CATEGORY_COLORS[exercise.category]}`}
-          style={exercise.mediaUrl ? { backgroundImage: `url(${exercise.mediaUrl})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
+          style={exercise.mediaUrl ? { backgroundImage: `url(${exercise.mediaUrl}), linear-gradient(135deg, #4338ca, #0d9488)`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
         >
           <div className="absolute inset-0 bg-slate-950/35" />
           <Target className="relative h-10 w-10 opacity-90 drop-shadow-md" />
@@ -72,7 +72,7 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
           {exercise.mediaUrl && (
             <div
               className="relative h-40 overflow-hidden rounded-xl bg-cover bg-center"
-              style={{ backgroundImage: `url(${exercise.mediaUrl})` }}
+              style={{ backgroundImage: `url(${exercise.mediaUrl}), linear-gradient(135deg, #4338ca, #0d9488)` }}
               role="img"
               aria-label={exercise.mediaAlt ?? `${exercise.name} exercise guide`}
             >
