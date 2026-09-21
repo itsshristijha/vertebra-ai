@@ -12,12 +12,14 @@ import { DemoDataBadge } from "@/components/posture/DemoDataBadge";
 import { getTrends } from "@/lib/demo/data";
 import { useAppStore } from "@/lib/store/appStore";
 import type { TrendRange } from "@/types/health";
+import { TodayTrends } from "@/components/trends/TodayTrends";
 
 const RANGE_LABEL: Record<TrendRange, string> = { "7d": "7 Days", "30d": "30 Days", "90d": "90 Days" };
+type ViewRange = TrendRange | "today";
 
 export function TrendsView() {
-  const [range, setRange] = useState<TrendRange>("7d");
-  const data = useMemo(() => getTrends(range), [range]);
+  const [range, setRange] = useState<ViewRange>("today");
+  const data = useMemo(() => range === "today" ? null : getTrends(range), [range]);
   const hasCalibratedBaseline = useAppStore((s) => s.hasCalibratedBaseline);
 
   if (!hasCalibratedBaseline) {
@@ -51,8 +53,9 @@ export function TrendsView() {
         <DemoDataBadge />
       </div>
 
-      <Tabs value={range} onValueChange={(v) => setRange(v as TrendRange)}>
+      <Tabs value={range} onValueChange={(v) => setRange(v as ViewRange)}>
         <TabsList>
+          <TabsTrigger value="today">Today</TabsTrigger>
           {(Object.keys(RANGE_LABEL) as TrendRange[]).map((r) => (
             <TabsTrigger key={r} value={r}>
               {RANGE_LABEL[r]}
@@ -61,6 +64,8 @@ export function TrendsView() {
         </TabsList>
       </Tabs>
 
+      {range === "today" ? <TodayTrends /> : data && <>
+      <div className="mb-4 rounded-lg border border-amber-100 bg-amber-50 px-4 py-3 text-xs text-amber-800">7, 30 and 90 day views require verified stored sessions. These existing charts are demo history and are labelled accordingly.</div>
       <div className="grid gap-4 sm:grid-cols-3">
         <InsightCard icon={Sparkles} label="Most improved" value={data.insights.mostImproved} tone="good" />
         <InsightCard icon={TrendingDown} label="Needs attention" value={data.insights.needsAttention} tone="warning" />
@@ -76,6 +81,7 @@ export function TrendsView() {
           <TrendLineChart series={data.sittingDurationMinutes} color="#64748b" height={260} />
         </div>
       </div>
+      </>}
     </div>
   );
 }
