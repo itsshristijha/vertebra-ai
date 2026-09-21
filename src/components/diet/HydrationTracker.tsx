@@ -8,9 +8,21 @@ import { Button } from "@/components/ui/button";
 type Gender = "female" | "male" | "other";
 
 function dailyTarget(age: number, gender: Gender) {
-  if (age >= 65) return gender === "male" ? 2500 : 2200;
-  if (age < 18) return gender === "male" ? 2400 : 2200;
-  return gender === "male" ? 3000 : 2300;
+  const maleReference: Array<[number, number]> = [[10, 2200], [18, 3000], [30, 2950], [50, 2750], [65, 2500], [100, 2200]];
+  const femaleReference: Array<[number, number]> = [[10, 2000], [18, 2300], [30, 2280], [50, 2150], [65, 2050], [100, 1850]];
+  const reference = gender === "male" ? maleReference : gender === "female" ? femaleReference : maleReference.map(([referenceAge, maleValue], index) => [referenceAge, Math.round((maleValue + femaleReference[index][1]) / 2)] as [number, number]);
+  const boundedAge = Math.min(100, Math.max(10, age));
+
+  for (let index = 1; index < reference.length; index += 1) {
+    const [upperAge, upperValue] = reference[index];
+    const [lowerAge, lowerValue] = reference[index - 1];
+    if (boundedAge <= upperAge) {
+      const ageProgress = (boundedAge - lowerAge) / (upperAge - lowerAge);
+      return Math.round((lowerValue + (upperValue - lowerValue) * ageProgress) / 10) * 10;
+    }
+  }
+
+  return reference[reference.length - 1][1];
 }
 
 function nextReminder(intervalHours: number) {
