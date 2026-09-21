@@ -131,6 +131,12 @@ export function getSpineHealthScore(): SpineHealthScore {
   };
 }
 
+export function getDemoSpineHealthScoreAt(timestamp = Date.now()): number {
+  const baseline = getSpineHealthScore();
+  const rhythm = Math.sin(timestamp / 18000) * 3.5 + Math.sin(timestamp / 43000) * 2;
+  return Math.round(Math.max(0, Math.min(100, baseline.score + rhythm)));
+}
+
 export function getDashboardSummary() {
   const health = getSpineHealthScore();
   return {

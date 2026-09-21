@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { CircularScore } from "@/components/charts/CircularScore";
+import { DynamicScore } from "@/components/spine-health/DynamicScore";
 import { DemoDataBadge } from "@/components/posture/DemoDataBadge";
 import { RiskDisclaimer } from "@/components/posture/RiskDisclaimer";
 import { getSpineHealthScore } from "@/lib/demo/data";
@@ -31,7 +31,7 @@ export default function SpineHealthPage() {
 
       <Card>
         <CardContent className="flex flex-col items-center gap-6 p-8 sm:flex-row sm:items-start">
-          <CircularScore value={health.score} size={188} label="out of 100" />
+          <DynamicScore initialScore={health.score} size={188} />
           <div className="w-full space-y-4">
             {Object.entries(health.breakdown).map(([key, value]) => (
               <div key={key}>

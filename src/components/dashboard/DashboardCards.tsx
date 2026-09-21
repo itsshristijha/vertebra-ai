@@ -2,7 +2,7 @@
 
 import { Activity, Clock, Gauge, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CircularScore } from "@/components/charts/CircularScore";
+import { DynamicScore } from "@/components/spine-health/DynamicScore";
 import { ModeBadge } from "@/components/posture/DemoDataBadge";
 import { useAppStore } from "@/lib/store/appStore";
 import { formatMinutes, signed } from "@/lib/utils";
@@ -21,7 +21,7 @@ export function DashboardCards({ summary }: { summary: Summary }) {
           <ModeBadge mode={mode} />
         </CardHeader>
         <CardContent className="flex flex-col items-center pt-2">
-          <CircularScore value={summary.spineHealthScore} label="out of 100" size={160} />
+          <DynamicScore initialScore={summary.spineHealthScore} size={160} />
           <p className="mt-4 text-center text-xs text-muted-foreground">
             Composite of head alignment, shoulder symmetry, spine alignment, postural load and sitting behaviour.
           </p>
