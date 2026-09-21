@@ -24,9 +24,9 @@ export function HydrationTracker() {
   const [drunk, setDrunk] = useState(0);
   const [reminderTime, setReminderTime] = useState(nextReminder);
   const target = useMemo(() => dailyTarget(age, gender), [age, gender]);
-  const bottleCapacity = 750;
-  const bottleLevel = Math.max(0, 1 - (drunk % bottleCapacity) / bottleCapacity);
+  const bottleLevel = Math.max(0, 1 - drunk / target);
   const progress = Math.min(100, Math.round((drunk / target) * 100));
+  const remaining = Math.max(0, target - drunk);
 
   function addWater(amount: number) {
     setDrunk((current) => Math.min(target, Math.max(0, current + amount)));
@@ -48,9 +48,9 @@ export function HydrationTracker() {
           <div className="relative h-44 w-24 overflow-hidden rounded-b-[1.7rem] rounded-t-xl border-4 border-sky-200 bg-white shadow-inner">
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-sky-500 to-cyan-300 transition-all duration-500" style={{ height: `${Math.max(8, bottleLevel * 100)}%` }} />
             <div className="absolute inset-x-2 top-3 h-1 rounded-full bg-sky-100" />
-            <div className="absolute inset-0 flex items-center justify-center"><span className="rounded-full bg-white/75 px-2 py-1 text-xs font-bold text-sky-800">{Math.max(0, bottleCapacity - (drunk % bottleCapacity))} ml</span></div>
+            <div className="absolute inset-0 flex items-center justify-center"><span className="rounded-full bg-white/75 px-2 py-1 text-xs font-bold text-sky-800">{remaining.toLocaleString()} ml left</span></div>
           </div>
-          <div className="mt-4 text-center"><p className="text-sm font-semibold">Today&apos;s water</p><p className="mt-1 text-2xl font-bold text-sky-700">{drunk.toLocaleString()} <span className="text-sm font-medium text-muted-foreground">/ {target.toLocaleString()} ml</span></p><div className="mt-2 h-2 w-48 overflow-hidden rounded-full bg-sky-100"><div className="h-full rounded-full bg-sky-500 transition-all" style={{ width: `${progress}%` }} /></div></div>
+          <div className="mt-4 text-center"><p className="text-sm font-semibold">Today&apos;s water</p><p className="mt-1 text-2xl font-bold text-sky-700">{(drunk / 1000).toFixed(2)} L <span className="text-sm font-medium text-muted-foreground">consumed</span></p><p className="mt-1 text-xs text-muted-foreground">{(remaining / 1000).toFixed(2)} L remaining of {(target / 1000).toFixed(1)} L</p><div className="mt-2 h-2 w-48 overflow-hidden rounded-full bg-sky-100"><div className="h-full rounded-full bg-sky-500 transition-all" style={{ width: `${progress}%` }} /></div></div>
         </div>
 
         <div className="space-y-5">
@@ -64,7 +64,7 @@ export function HydrationTracker() {
               </select>
             </label>
           </div>
-          <div className="rounded-xl border border-sky-100 bg-sky-50/60 p-4"><p className="text-sm font-semibold text-sky-950">Your estimated daily target</p><p className="mt-1 text-2xl font-bold text-sky-700">{(target / 1000).toFixed(1)} L <span className="text-xs font-medium text-sky-800">({target.toLocaleString()} ml)</span></p><p className="mt-1 text-xs leading-5 text-slate-600">About {Math.ceil(target / 250)} glasses of 250 ml. This is a general fluid estimate, not a medical prescription.</p></div>
+          <div className="rounded-xl border border-sky-100 bg-sky-50/60 p-4"><p className="text-sm font-semibold text-sky-950">Your estimated daily target</p><p className="mt-1 text-2xl font-bold text-sky-700">{(target / 1000).toFixed(1)} L <span className="text-xs font-medium text-sky-800">({target.toLocaleString()} ml)</span></p><p className="mt-1 text-xs leading-5 text-slate-600">{(drunk / 1000).toFixed(2)} L logged · {(remaining / 1000).toFixed(2)} L left</p><p className="mt-1 text-xs leading-5 text-slate-600">About {Math.ceil(target / 250)} glasses of 250 ml. This is a general fluid estimate, not a medical prescription.</p></div>
           <div className="flex flex-wrap gap-2"><Button size="sm" onClick={() => addWater(250)}><Plus className="h-4 w-4" /> Log 250 ml</Button><Button size="sm" variant="outline" onClick={() => addWater(500)}><Plus className="h-4 w-4" /> Log 500 ml</Button><Button size="sm" variant="ghost" onClick={() => setDrunk(0)}><RotateCcw className="h-4 w-4" /> Reset</Button></div>
           <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border p-3"><div className="flex items-center gap-2 text-xs text-muted-foreground"><Bell className="h-4 w-4 text-amber-500" /><span>Next gentle reminder: <strong className="text-foreground">{reminderTime}</strong></span></div><Button size="sm" variant="outline" onClick={() => setReminderTime(nextReminder())}><TimerReset className="h-4 w-4" /> Remind me later</Button></div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground"><Minus className="h-3.5 w-3.5 text-sky-500" /> Drink steadily through the day instead of waiting until you feel thirsty.</div>
