@@ -3,6 +3,7 @@ import { Apple, Brain, Check, CircleAlert, HeartPulse, Leaf, X } from "lucide-re
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RiskDisclaimer } from "@/components/posture/RiskDisclaimer";
 import { RecipeBrowser } from "@/components/diet/RecipeBrowser";
+import { HydrationTracker } from "@/components/diet/HydrationTracker";
 
 export const metadata: Metadata = { title: "Diet & Wellbeing" };
 
@@ -54,6 +55,8 @@ export default function DietPage() {
       </div>
 
       <RecipeBrowser />
+
+      <HydrationTracker />
 
       <Card className="border-indigo-100 bg-indigo-50/50">
         <CardHeader><CardTitle className="flex items-center gap-2"><Brain className="h-5 w-5 text-indigo-600" /> Mental wellbeing is part of the routine</CardTitle></CardHeader>
