@@ -13,8 +13,8 @@ function dailyTarget(age: number, gender: Gender) {
   return gender === "male" ? 3000 : 2300;
 }
 
-function nextReminder() {
-  const next = new Date(Date.now() + 60 * 60 * 1000);
+function nextReminder(intervalHours: number) {
+  const next = new Date(Date.now() + intervalHours * 60 * 60 * 1000);
   return next.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 }
 
@@ -22,7 +22,8 @@ export function HydrationTracker() {
   const [age, setAge] = useState(25);
   const [gender, setGender] = useState<Gender>("other");
   const [drunk, setDrunk] = useState(0);
-  const [reminderTime, setReminderTime] = useState(nextReminder);
+  const [reminderHours, setReminderHours] = useState(2);
+  const [reminderTime, setReminderTime] = useState(() => nextReminder(2));
   const target = useMemo(() => dailyTarget(age, gender), [age, gender]);
   const bottleLevel = Math.max(0, 1 - drunk / target);
   const progress = Math.min(100, Math.round((drunk / target) * 100));
@@ -66,7 +67,10 @@ export function HydrationTracker() {
           </div>
           <div className="rounded-xl border border-sky-100 bg-sky-50/60 p-4"><p className="text-sm font-semibold text-sky-950">Your estimated daily target</p><p className="mt-1 text-2xl font-bold text-sky-700">{(target / 1000).toFixed(1)} L <span className="text-xs font-medium text-sky-800">({target.toLocaleString()} ml)</span></p><p className="mt-1 text-xs leading-5 text-slate-600">{(drunk / 1000).toFixed(2)} L logged · {(remaining / 1000).toFixed(2)} L left</p><p className="mt-1 text-xs leading-5 text-slate-600">About {Math.ceil(target / 250)} glasses of 250 ml. This is a general fluid estimate, not a medical prescription.</p></div>
           <div className="flex flex-wrap gap-2"><Button size="sm" onClick={() => addWater(250)}><Plus className="h-4 w-4" /> Log 250 ml</Button><Button size="sm" variant="outline" onClick={() => addWater(500)}><Plus className="h-4 w-4" /> Log 500 ml</Button><Button size="sm" variant="ghost" onClick={() => setDrunk(0)}><RotateCcw className="h-4 w-4" /> Reset</Button></div>
-          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border p-3"><div className="flex items-center gap-2 text-xs text-muted-foreground"><Bell className="h-4 w-4 text-amber-500" /><span>Next gentle reminder: <strong className="text-foreground">{reminderTime}</strong></span></div><Button size="sm" variant="outline" onClick={() => setReminderTime(nextReminder())}><TimerReset className="h-4 w-4" /> Remind me later</Button></div>
+          <div className="space-y-3 rounded-xl border border-border p-3">
+            <div className="flex flex-wrap items-center justify-between gap-3"><div className="flex items-center gap-2 text-xs text-muted-foreground"><Bell className="h-4 w-4 text-amber-500" /><span>Next reminder: <strong className="text-foreground">{reminderTime}</strong></span></div><Button size="sm" variant="outline" onClick={() => setReminderTime(nextReminder(reminderHours))}><TimerReset className="h-4 w-4" /> Set reminder</Button></div>
+            <div className="flex flex-wrap items-center gap-2"><span className="text-xs font-medium text-muted-foreground">Remind me every</span>{[2, 3].map((hours) => <Button key={hours} size="sm" variant={reminderHours === hours ? "default" : "outline"} onClick={() => { setReminderHours(hours); setReminderTime(nextReminder(hours)); }}>{hours} hours</Button>)}</div>
+          </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground"><Minus className="h-3.5 w-3.5 text-sky-500" /> Drink steadily through the day instead of waiting until you feel thirsty.</div>
         </div>
       </CardContent>
