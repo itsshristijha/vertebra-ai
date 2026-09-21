@@ -16,7 +16,7 @@ import type { PoseFrame } from "@/types/posture";
  */
 export interface PoseProvider {
   readonly kind: "demo" | "blazepose";
-  init(video: HTMLVideoElement): Promise<void>;
+  init(video: HTMLVideoElement, stream?: MediaStream): Promise<void>;
   start(onFrame: (frame: PoseFrame) => void): void;
   stop(): void;
   dispose(): void;

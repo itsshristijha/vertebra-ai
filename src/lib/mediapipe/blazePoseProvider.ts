@@ -37,18 +37,20 @@ export class BlazePoseProvider implements PoseProvider {
   private raf: number | null = null;
   private consecutiveMisses = 0;
 
-  async init(video: HTMLVideoElement): Promise<void> {
+  async init(video: HTMLVideoElement, existingStream?: MediaStream): Promise<void> {
     this.video = video;
 
-    let stream: MediaStream;
-    try {
-      stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false });
-    } catch (err) {
-      const e = err as DOMException;
-      if (e.name === "NotAllowedError" || e.name === "SecurityError") {
-        throw new PoseProviderError("camera-permission-denied", "Camera permission was denied.");
+    let stream = existingStream;
+    if (!stream) {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false });
+      } catch (err) {
+        const e = err as DOMException;
+        if (e.name === "NotAllowedError" || e.name === "SecurityError") {
+          throw new PoseProviderError("camera-permission-denied", "Camera permission was denied.");
+        }
+        throw new PoseProviderError("camera-unavailable", "No camera could be accessed.");
       }
-      throw new PoseProviderError("camera-unavailable", "No camera could be accessed.");
     }
     video.srcObject = stream;
     await video.play().catch(() => {});

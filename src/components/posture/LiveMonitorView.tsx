@@ -8,6 +8,7 @@ import { StateBanner } from "@/components/ui/state-banner";
 import { CircularScore } from "@/components/charts/CircularScore";
 import { PoseSkeleton, STATIC_DEMO_LANDMARKS } from "@/components/posture/PoseSkeleton";
 import { ModeBadge } from "@/components/posture/DemoDataBadge";
+import { useState } from "react";
 import { useAppStore } from "@/lib/store/appStore";
 import { useLiveMonitor } from "@/components/posture/useLiveMonitor";
 import { postureStateLabel } from "@/lib/posture/calculations";
@@ -20,6 +21,7 @@ function metricLabel(deg: number, goodBelow: number, moderateBelow: number) {
 }
 
 export function LiveMonitorView() {
+  const [view, setView] = useState<"front" | "side">("front");
   const mode = useAppStore((s) => s.mode);
   const toggleMode = useAppStore((s) => s.toggleMode);
   const { videoRef, frame, features, postureState, sessionSeconds, error, retry } = useLiveMonitor();
@@ -48,20 +50,25 @@ export function LiveMonitorView() {
           <span className={cn("rounded-full px-3 py-1.5", mode === "live-ai" ? "bg-emerald-600 text-white" : "text-muted-foreground")}>LIVE AI</span>
           <span className={cn("rounded-full px-3 py-1.5", mode === "demo" ? "bg-indigo-700 text-white" : "text-muted-foreground")}>DEMO MODE</span>
         </button>
+        <div className="flex items-center gap-1 rounded-full border border-border bg-muted p-1 text-xs font-semibold">
+          {(["front", "side"] as const).map((option) => <button key={option} type="button" onClick={() => setView(option)} className={cn("rounded-full px-3 py-1.5 capitalize", view === option ? "bg-white text-foreground shadow-sm" : "text-muted-foreground")}>{option} view</button>)}
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <Card className="overflow-hidden">
           <div className="relative aspect-video w-full bg-navy">
             {mode === "live-ai" && (
-              <video ref={videoRef} muted playsInline className="absolute inset-0 h-full w-full object-cover" style={{ transform: "scaleX(-1)" }} />
+              <video ref={videoRef} muted playsInline className="absolute inset-0 h-full w-full object-cover" style={{ transform: view === "front" ? "scaleX(-1)" : undefined }} />
             )}
 
             {!error && (
-              <div className="absolute inset-0" style={{ transform: mode === "live-ai" ? "scaleX(-1)" : undefined }}>
+              <div className="absolute inset-0" style={{ transform: mode === "live-ai" && view === "front" ? "scaleX(-1)" : undefined }}>
                 <PoseSkeleton landmarks={landmarks} className="h-full w-full" highlightColor="#5eead4" />
               </div>
             )}
+
+            <span className="absolute bottom-3 left-3 rounded-full bg-black/50 px-2.5 py-1 text-xs font-medium text-white backdrop-blur">{view === "side" ? "Side view: turn 90°" : "Front view"}</span>
 
             <div className="absolute left-3 top-3 flex gap-2">
               <ModeBadge mode={mode} />

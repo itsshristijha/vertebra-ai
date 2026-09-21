@@ -7,17 +7,22 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { PoseSkeleton, STATIC_DEMO_LANDMARKS } from "@/components/posture/PoseSkeleton";
+import { BlazePoseProvider } from "@/lib/mediapipe";
+import type { PoseLandmarks } from "@/types/posture";
 
 type View = "front" | "side";
 
 export function AssessmentCamera() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const providerRef = useRef<BlazePoseProvider | null>(null);
   const [view, setView] = useState<View>("front");
   const [status, setStatus] = useState<"idle" | "connecting" | "connected" | "denied" | "unavailable">("idle");
+  const [landmarks, setLandmarks] = useState<PoseLandmarks | null>(null);
 
   useEffect(() => () => {
     streamRef.current?.getTracks().forEach((track) => track.stop());
+    providerRef.current?.dispose();
   }, []);
 
   async function startCamera() {
@@ -30,6 +35,12 @@ export function AssessmentCamera() {
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         await videoRef.current.play();
+        const provider = new BlazePoseProvider();
+        providerRef.current = provider;
+        await provider.init(videoRef.current, stream);
+        provider.start((frame) => {
+          if (frame.frameQuality === "good") setLandmarks(frame.landmarks);
+        });
       }
       setStatus("connected");
     } catch (error) {
@@ -39,8 +50,11 @@ export function AssessmentCamera() {
 
   function stopCamera() {
     streamRef.current?.getTracks().forEach((track) => track.stop());
+    providerRef.current?.dispose();
+    providerRef.current = null;
     streamRef.current = null;
     if (videoRef.current) videoRef.current.srcObject = null;
+    setLandmarks(null);
     setStatus("idle");
   }
 
@@ -66,6 +80,7 @@ export function AssessmentCamera() {
             <TabsContent key={currentView} value={currentView}>
               <div className="relative aspect-video overflow-hidden rounded-2xl bg-navy">
                 {status === "connected" ? <video ref={videoRef} muted playsInline className="absolute inset-0 h-full w-full object-cover" style={{ transform: currentView === "front" ? "scaleX(-1)" : undefined }} /> : <PoseSkeleton landmarks={currentView === "side" ? { ...STATIC_DEMO_LANDMARKS, nose: { ...STATIC_DEMO_LANDMARKS.nose, x: 0.62 }, leftEar: { ...STATIC_DEMO_LANDMARKS.leftEar, x: 0.56 }, rightEar: { ...STATIC_DEMO_LANDMARKS.rightEar, x: 0.6 } } : STATIC_DEMO_LANDMARKS} className="absolute inset-0 h-full w-full opacity-80" highlightColor="#5eead4" />}
+                {status === "connected" && landmarks && <div className="absolute inset-0" style={{ transform: currentView === "front" ? "scaleX(-1)" : undefined }}><PoseSkeleton landmarks={landmarks} className="h-full w-full" highlightColor="#5eead4" /></div>}
                 <div className="absolute inset-[10%] rounded-2xl border border-dashed border-teal-200/50" />
                 <div className="absolute left-4 top-4 flex items-center gap-2"><Badge variant="warning">{status === "connected" ? "Live camera" : "Demo guide"}</Badge>{sideView && <span className="rounded-full bg-black/45 px-2.5 py-1 text-xs font-medium text-white">Turn 90° sideways</span>}</div>
                 {status !== "connected" && <div className="absolute inset-x-4 bottom-4 rounded-xl bg-slate-950/60 p-3 text-xs leading-5 text-white backdrop-blur"><p>{statusCopy}</p>{status === "idle" ? <Button size="sm" className="mt-2" onClick={startCamera}><Camera className="h-4 w-4" /> Start camera</Button> : <div className="mt-2 flex flex-wrap gap-2"><Button size="sm" onClick={startCamera}><RotateCcw className="h-4 w-4" /> Try again</Button><Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/10" onClick={() => setStatus("idle")}>Use demo view</Button></div>}</div>}
