@@ -36,6 +36,24 @@ export function WeeklyReportView({ report }: { report: WeeklyReport }) {
     );
   }
 
+  if (report.isDemoData) {
+    return (
+      <div className="mx-auto max-w-4xl space-y-6">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Your Weekly Spine Health Report</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Verified history is required before a report can be generated.</p>
+        </div>
+        <StateBanner
+          icon={FileClock}
+          title="No verified historical data yet"
+          description="This prototype does not turn demo values into a personal report. Complete real camera sessions in Live Monitor and connect a persistent data backend before using weekly trends or averages."
+          action={<Button asChild size="sm"><Link href="/live-monitor">Start Live Monitor</Link></Button>}
+        />
+        <RiskDisclaimer />
+      </div>
+    );
+  }
+
   function downloadReport() {
     const lines = [
       "VERTEBRA-AI — Weekly Spine Health Report (Demo Data)",
