@@ -19,7 +19,7 @@ const FAQS = [
   },
   {
     q: "Is this a finished, clinically validated product?",
-    a: "No — this is a Health Informatics capstone research prototype from VIT Bhopal University. It documents a proposed methodology and an interactive demonstration, not a completed clinical evaluation.",
+    a: "No — this is a Health Informatics capstone research prototype. It documents a proposed methodology and an interactive demonstration, not a completed clinical evaluation.",
   },
 ];
 

@@ -41,7 +41,7 @@ export function MarketingFooter() {
             <span className="text-sm font-semibold text-white">VERTEBRA-AI</span>
           </Link>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-slate-400">
-            A VIT Bhopal University Health Informatics capstone project. Research and wellness prototype — not a
+            A Health Informatics capstone project. Research and wellness prototype — not a
             diagnostic system.
           </p>
         </div>
@@ -61,7 +61,7 @@ export function MarketingFooter() {
         ))}
       </div>
       <div className="border-t border-white/10 py-6 text-center text-xs text-slate-500">
-        © {new Date().getFullYear()} VERTEBRA-AI — VIT Bhopal University capstone prototype. Not for clinical use.
+        © {new Date().getFullYear()} VERTEBRA-AI — Health Informatics capstone prototype. Not for clinical use.
       </div>
     </footer>
   );

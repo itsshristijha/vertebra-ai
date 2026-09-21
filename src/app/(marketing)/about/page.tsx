@@ -34,8 +34,7 @@ export default function AboutPage() {
         VERTEBRA-AI is an AI in Healthcare / Health Informatics capstone project.
       </h1>
       <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-        Developed as a B.Tech Computer Science and Engineering (Health Informatics specialisation) capstone at the
-        School of Artificial Intelligence, VIT Bhopal University, VERTEBRA-AI focuses on continuous posture
+        Developed as a B.Tech Computer Science and Engineering (Health Informatics specialisation) capstone, VERTEBRA-AI focuses on continuous posture
         monitoring and early prediction of spine-disorder risk — moving beyond the conventional objective of
         identifying whether a person is sitting correctly at a particular instant.
       </p>
@@ -98,7 +97,7 @@ export default function AboutPage() {
       <section className="mt-12">
         <h2 className="text-lg font-semibold text-foreground">Project team</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          {TEAM.join(" · ")} — School of Artificial Intelligence, VIT Bhopal University.
+          {TEAM.join(" · ")} — Health Informatics capstone project team.
         </p>
       </section>
 

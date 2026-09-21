@@ -3,7 +3,7 @@
 **Live Vercel app**: https://vertebra-ai-2.vercel.app
 
 
-A Next.js implementation of **VERTEBRA-AI**, a VIT Bhopal University Health Informatics capstone
+A Next.js implementation of **VERTEBRA-AI**, a Health Informatics capstone
 project ("An Intelligent Posture and Spine Disorder Prediction System"). This app is a
 **research and wellness prototype** — it does not diagnose spinal disorders or replace
 professional medical assessment, and it does not claim any validated accuracy figures (the
