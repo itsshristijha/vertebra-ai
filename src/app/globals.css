@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------- */
+/* VERTEBRA-AI design tokens                                              */
+/* Palette: deep navy, indigo, teal, soft blue, white, light gray.        */
+/* Premium healthcare-AI aesthetic — clean, calm, high-contrast text.     */
+/* ---------------------------------------------------------------------- */
+
+:root {
+  --background: #f6f8fb;
+  --foreground: #0b1220;
+
+  --card: #ffffff;
+  --card-foreground: #0b1220;
+
+  --popover: #ffffff;
+  --popover-foreground: #0b1220;
+
+  --primary: #4338ca; /* indigo-700 */
+  --primary-foreground: #ffffff;
+
+  --secondary: #0d9488; /* teal-600 */
+  --secondary-foreground: #ffffff;
+
+  --muted: #eef1f6;
+  --muted-foreground: #5b6478;
+
+  --accent: #eef2ff; /* indigo-50 */
+  --accent-foreground: #3730a3;
+
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+
+  --success: #059669;
+  --warning: #d97706;
+
+  --border: #e3e8f0;
+  --input: #e3e8f0;
+  --ring: #6366f1;
+
+  --navy: #0a1128;
+  --navy-2: #101a3a;
+  --navy-3: #16204a;
+
+  --radius: 1rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-navy: var(--navy);
+  --color-navy-2: var(--navy-2);
+  --color-navy-3: var(--navy-3);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 0.35rem);
+  --radius-sm: calc(var(--radius) - 0.6rem);
+  --radius-xl: calc(var(--radius) + 0.4rem);
+
+  --font-sans: "Vertebra Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --animate-fade-up: fade-up 0.6s ease-out both;
+  --animate-pulse-ring: pulse-ring 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.35);
+    }
+    70% {
+      box-shadow: 0 0 0 14px rgba(99, 102, 241, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--primary);
+  color: white;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--muted-foreground) 40%, transparent);
+  border-radius: 999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.sr-only-focusable:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
