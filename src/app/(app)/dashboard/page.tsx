@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { getDashboardSummary, getTrends, DEMO_USER } from "@/lib/demo/data";
+import { getDashboardSummary, getTrends } from "@/lib/demo/data";
 import { DashboardCards } from "@/components/dashboard/DashboardCards";
+import { DashboardGreeting } from "@/components/dashboard/DashboardGreeting";
 import { WeeklySnapshotChart } from "@/components/dashboard/WeeklySnapshotChart";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { RiskDisclaimer } from "@/components/posture/RiskDisclaimer";
@@ -13,10 +14,7 @@ export default function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Welcome back, {DEMO_USER.name.split(" ")[0]}</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Here&apos;s how your posture has been trending.</p>
-      </div>
+      <DashboardGreeting />
 
       <DashboardCards summary={summary} />
 

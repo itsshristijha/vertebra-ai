@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Clock, Pause, Play, RotateCcw, Target } from "lucide-react";
+import { Clock, Image as ImageIcon, Pause, Play, RotateCcw, Target } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -29,8 +29,15 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
   return (
     <>
       <Card className="flex h-full flex-col overflow-hidden">
-        <div className={`flex h-28 items-center justify-center bg-gradient-to-br text-white ${CATEGORY_COLORS[exercise.category]}`}>
-          <Target className="h-10 w-10 opacity-90" />
+        <div
+          className={`relative flex h-36 items-center justify-center overflow-hidden bg-gradient-to-br text-white ${CATEGORY_COLORS[exercise.category]}`}
+          style={exercise.mediaUrl ? { backgroundImage: `url(${exercise.mediaUrl})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
+        >
+          <div className="absolute inset-0 bg-slate-950/35" />
+          <Target className="relative h-10 w-10 opacity-90 drop-shadow-md" />
+          <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-slate-950/55 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-sm">
+            <ImageIcon className="h-3 w-3" /> Exercise guide
+          </span>
         </div>
         <CardContent className="flex flex-1 flex-col gap-3 p-5">
           <div>
@@ -57,6 +64,17 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
             <DialogTitle>{exercise.name}</DialogTitle>
             <DialogDescription>Targets: {exercise.targets}</DialogDescription>
           </DialogHeader>
+          {exercise.mediaUrl && (
+            <div
+              className="relative h-40 overflow-hidden rounded-xl bg-cover bg-center"
+              style={{ backgroundImage: `url(${exercise.mediaUrl})` }}
+              role="img"
+              aria-label={exercise.mediaAlt ?? `${exercise.name} exercise guide`}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 to-transparent" />
+              <span className="absolute bottom-3 left-3 text-xs font-medium text-white">Visual movement guide</span>
+            </div>
+          )}
           <ExerciseRunner exercise={exercise} />
           <p className="mt-4 text-xs text-muted-foreground">
             General wellness exercise guidance — not a substitute for supervised physiotherapy. Stop if you feel pain.

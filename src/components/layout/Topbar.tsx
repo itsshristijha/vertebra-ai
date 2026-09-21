@@ -15,7 +15,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { StatusPill } from "./StatusPill";
 import { SidebarNav } from "./SidebarNav";
 import { useAppStore } from "@/lib/store/appStore";
-import { DEMO_USER } from "@/lib/demo/data";
+import { useSessionUser } from "@/lib/auth/sessionUser";
 import Link from "next/link";
 
 export function Topbar() {
@@ -24,6 +24,7 @@ export function Topbar() {
   const cameraStatus = useAppStore((s) => s.cameraStatus);
   const imuStatus = useAppStore((s) => s.imuStatus);
   const privacySettings = useAppStore((s) => s.privacySettings);
+  const user = useSessionUser();
 
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-white/85 px-4 backdrop-blur-md sm:px-6">
@@ -111,12 +112,13 @@ export function Topbar() {
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-2 rounded-full pl-1 pr-2 py-1 hover:bg-muted" aria-label="Account menu">
               <Avatar className="h-8 w-8">
-                <AvatarFallback>{DEMO_USER.name.slice(0, 1)}</AvatarFallback>
+                <AvatarFallback>{user.name.slice(0, 1)}</AvatarFallback>
               </Avatar>
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>{DEMO_USER.name}</DropdownMenuLabel>
+            <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
+            <DropdownMenuItem className="text-xs text-muted-foreground">{user.email}</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <Link href="/settings">Settings</Link>

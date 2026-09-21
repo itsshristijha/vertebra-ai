@@ -10,7 +10,7 @@ import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useAppStore } from "@/lib/store/appStore";
-import { DEMO_USER } from "@/lib/demo/data";
+import { useSessionUser } from "@/lib/auth/sessionUser";
 
 const NOTIFICATION_ROWS: { key: keyof ReturnType<typeof useAppStore.getState>["notificationSettings"]; label: string; description: string }[] = [
   { key: "postureReminders", label: "Posture reminders", description: "Gentle nudges when a deviation has been sustained." },
@@ -24,9 +24,13 @@ export function SettingsView() {
   const router = useRouter();
   const notificationSettings = useAppStore((s) => s.notificationSettings);
   const updateNotificationSettings = useAppStore((s) => s.updateNotificationSettings);
+  const user = useSessionUser();
 
   function signOut() {
-    if (typeof window !== "undefined") sessionStorage.removeItem("vertebra_token");
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("vertebra_token");
+      sessionStorage.removeItem("vertebra_user");
+    }
     router.push("/login");
   }
 
@@ -45,11 +49,11 @@ export function SettingsView() {
         </CardHeader>
         <CardContent className="flex items-center gap-4">
           <Avatar className="h-12 w-12">
-            <AvatarFallback>{DEMO_USER.name.slice(0, 1)}</AvatarFallback>
+            <AvatarFallback>{user.name.slice(0, 1)}</AvatarFallback>
           </Avatar>
           <div>
-            <p className="text-sm font-medium text-foreground">{DEMO_USER.name}</p>
-            <p className="text-xs text-muted-foreground">{DEMO_USER.email}</p>
+            <p className="text-sm font-medium text-foreground">{user.name}</p>
+            <p className="text-xs text-muted-foreground">{user.email}</p>
           </div>
         </CardContent>
       </Card>

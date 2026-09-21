@@ -78,4 +78,6 @@ export interface Exercise {
   totalSeconds?: number;
   reps?: number;
   sets?: number;
+  mediaUrl?: string;
+  mediaAlt?: string;
 }

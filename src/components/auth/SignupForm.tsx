@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { register } from "@/services/authService";
+import { SESSION_USER_KEY } from "@/lib/auth/sessionUser";
 
 export function SignupForm() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export function SignupForm() {
     setLoading(true);
     setError(null);
     try {
-      const { token } = await register({
+      const { token, user } = await register({
         name: form.name,
         email: form.email,
         password: form.password,
@@ -32,7 +33,10 @@ export function SignupForm() {
         heightCm: form.heightCm ? Number(form.heightCm) : undefined,
         weightKg: form.weightKg ? Number(form.weightKg) : undefined,
       });
-      if (typeof window !== "undefined") sessionStorage.setItem("vertebra_token", token);
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("vertebra_token", token);
+        sessionStorage.setItem(SESSION_USER_KEY, JSON.stringify(user));
+      }
       router.push("/onboarding");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");

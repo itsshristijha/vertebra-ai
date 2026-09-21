@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { login } from "@/services/authService";
+import { SESSION_USER_KEY } from "@/lib/auth/sessionUser";
 
 export function LoginForm() {
   const router = useRouter();
@@ -21,8 +22,11 @@ export function LoginForm() {
     setLoading(true);
     setError(null);
     try {
-      const { token } = await login(email, password);
-      if (typeof window !== "undefined") sessionStorage.setItem("vertebra_token", token);
+      const { token, user } = await login(email, password);
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("vertebra_token", token);
+        sessionStorage.setItem(SESSION_USER_KEY, JSON.stringify(user));
+      }
       router.push("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
