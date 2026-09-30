@@ -9,6 +9,25 @@ const POINTS = [
   "The same design choice the VERTEBRA-AI research team prioritised after reviewing 40 studies across five sub-domains.",
 ];
 
+const VISION_POINTS = [
+  {
+    title: "Personal Posture Digital Twin",
+    body: "The system models your normal ranges and learns when your posture has drifted beyond your own baseline.",
+  },
+  {
+    title: "Early Risk Prediction",
+    body: "Instead of only flagging a bad frame, it watches sustained patterns such as forward-head posture and shoulder asymmetry.",
+  },
+  {
+    title: "Posture Fatigue Detection",
+    body: "It recognises gradual worsening over time and signals the moment your posture is trending toward strain.",
+  },
+  {
+    title: "AI Explanation & Micro-Break Guidance",
+    body: "Users receive plain-language feedback, short corrective exercises, and adaptive resets when risk increases.",
+  },
+];
+
 export function PersonalisationSection() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
@@ -46,6 +65,15 @@ export function PersonalisationSection() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        {VISION_POINTS.map((item) => (
+          <div key={item.title} className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <p className="text-sm font-semibold text-foreground">{item.title}</p>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.body}</p>
+          </div>
+        ))}
       </div>
     </section>
   );

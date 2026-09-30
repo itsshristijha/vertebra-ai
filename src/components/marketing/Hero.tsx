@@ -21,18 +21,18 @@ export function Hero() {
       <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8 lg:py-28">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
           <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-slate-300">
-            AI in Healthcare · Health Informatics Capstone
+            Personal AI Spine Guardian · On-device posture intelligence
           </span>
           <h1 className="mt-6 text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-            Understand Your Posture.
+            Personal AI Spine Guardian.
             <br />
             <span className="bg-gradient-to-r from-indigo-300 to-teal-300 bg-clip-text text-transparent">
-              Predict Your Spine Health.
+              Detect risk before it becomes a habit.
             </span>
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
-            VERTEBRA-AI combines computer vision, personalised baselines and temporal AI to help you understand how
-            your daily posture may influence future spine-health risk.
+            VERTEBRA-AI continuously learns your personal baseline, spots subtle posture drift, and gives real-time
+            guidance before long-term spinal strain takes hold.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button size="lg" asChild>

@@ -11,14 +11,14 @@ import {
 } from "lucide-react";
 
 const FEATURES = [
+  { icon: Crosshair, title: "Personal Posture Digital Twin", body: "Learns your normal neck, shoulder and pelvic alignment so deviations are judged against your baseline, not a generic threshold." },
+  { icon: AlertTriangle, title: "Early Risk Prediction", body: "Detects sustained forward-head or asymmetric patterns before they become entrenched habits." },
+  { icon: LineChart, title: "Posture Fatigue Detection", body: "Tracks how your posture drifts over time and flags gradual fatigue before the score drops sharply." },
+  { icon: Sparkles, title: "AI Why Is My Posture Bad?", body: "Explains the cause in plain language — forward head, shoulder drop, pelvic asymmetry and persistence over time." },
+  { icon: Bell, title: "Intelligent Micro-Breaks", body: "Issues short reset prompts only when your posture worsens, avoiding noisy reminders and alert fatigue." },
+  { icon: Dumbbell, title: "Corrective Exercise Recommendations", body: "Pairs detected issues with guided actions such as chin tucks, shoulder resets and brief posture walks." },
   { icon: Video, title: "Live Monitor", body: "Real-time skeleton overlay and posture-state feedback from your webcam." },
-  { icon: Crosshair, title: "Personal Calibration", body: "A guided enrolment scan builds your own posture baseline." },
   { icon: HeartPulse, title: "Spine Health Score", body: "One interpretable number, broken down into what's driving it." },
-  { icon: AlertTriangle, title: "Risk Outlook", body: "2–12 week research-prototype indicators, never a diagnosis." },
-  { icon: Sparkles, title: "Explainability", body: "See which joint, magnitude and duration drove a change." },
-  { icon: LineChart, title: "Trends", body: "Daily and weekly charts across score, load and alignment." },
-  { icon: Bell, title: "Low-frequency Nudges", body: "Gentle reminders designed to avoid alert fatigue." },
-  { icon: Dumbbell, title: "Exercise Library", body: "Targeted mobility exercises for neck, shoulders and upper back." },
   { icon: ShieldCheck, title: "Privacy by Design", body: "Local-first processing and full control over stored data." },
 ];
 
