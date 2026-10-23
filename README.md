@@ -1,6 +1,7 @@
 # VERTEBRA-AI — Intelligent Posture & Spine Health Prediction
 
 **Live Vercel app**: https://vertebra-ai-2.vercel.app
+**Youtube link** https://www.youtube.com/watch?v=OI6NaDstHCE
 
 
 A Next.js implementation of **VERTEBRA-AI**, a Health Informatics capstone
